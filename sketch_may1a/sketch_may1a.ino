@@ -20,9 +20,14 @@ unsigned long colorSensorMillis = 0;
 #define COLOR_3 A3
 #define COLOR_OUT A4
 
+// Setup Motor Pins
+#define MOTOR_PIN1 3
+#define MOTOR_PIN2 5
+#define MOTOR_PIN3 6
+#define MOTOR_PIN4 9
+
 void setup() {
 // put your setup code here, to run once:
-
 //Serial begin
 Serial.begin(9600);
 
@@ -31,6 +36,12 @@ pinMode(IR_1, INPUT);
 pinMode(IR_2, INPUT);
 pinMode(IR_3, INPUT);
 pinMode(IR_4, INPUT);
+
+// Setup Motor Pins
+pinMode(MOTOR_PIN1, OUTPUT);
+pinMode(MOTOR_PIN2, OUTPUT);
+pinMode(MOTOR_PIN3, OUTPUT);
+pinMode(MOTOR_PIN4, OUTPUT);
 }
 
 void loop() {
@@ -49,4 +60,18 @@ if (currentMillis - colorSensorMillis >= 250) {
   colorSensorMillis = currentMillis;
   readColorSensor();
 }
+
+// Test motor control by creating a routine that moves - 
+// the robot forward for 1 second and then turns 90 degrees right.
+// You will have to adjust the delay after the turn to make it a perfect square]
+Serial.print("Forward");
+motorControl(255, 255); // Go straight forward
+delay(1000);
+motorControl(0, 0); // Stop momentarily
+delay(100);
+Serial.print("Turning");
+motorControl(255, -255); // Turn to the right
+delay(500);
+motorControl(0, 0); // Stop momentarily
+delay(100);
 }
